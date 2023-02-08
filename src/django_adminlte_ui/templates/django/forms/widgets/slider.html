@@ -1,0 +1,18 @@
+{% if widget.attrs.step_labels %}
+<script>
+  function prettify_{{ widget.name }} (n) {
+    return ('{{ widget.attrs.step_labels }}'.split(','))['{{ widget.attrs.step_values }}'.split(',').indexOf(n.toString())];
+  }
+</script>
+{% endif %}
+<input type="hidden" name="{{ widget.name }}" class="irs-hidden-input"
+       x-init="$($el).ionRangeSlider({% if widget.attrs.step_labels %}{ prettify: prettify_{{ widget.name }} }{% endif %})"
+       {% if widget.value != None %} value="{{ widget.value|stringformat:'s' }}"{% endif %}
+       data-skin="{{ widget.attrs.skin|default:'round' }}"
+       data-type="{{ widget.attrs.type|default:'single' }}"
+       data-grid="{{ widget.attrs.grid|default:'true' }}"
+       data-min="{{ widget.attrs.min }}"
+       data-max="{{ widget.attrs.max }}"
+       data-step="{{ widget.attrs.step }}"
+       data-values="{{ widget.attrs.step_values }}"
+>

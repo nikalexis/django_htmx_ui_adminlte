@@ -1,0 +1,6 @@
+{% if header or message %}
+<div class="callout callout-{{ type }} {{ class }}">
+{% if header %}<h5>I am a danger callout!</h5>{% endif %}
+<p>{{ message }}</p>
+</div>
+{% endif %}

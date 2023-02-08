@@ -1,0 +1,69 @@
+{% load django_htmx %}{% load static %}<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="htmx-config" content='{"useTemplateFragments":true, "refreshOnHistoryMiss": true, "historyCacheSize": 1}'>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">  <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="{% static 'adminlte/plugins/fontawesome-free/css/all.min.css' %}"><!-- Font Awesome -->
+    <link rel="stylesheet" href="{% static 'adminlte/plugins/icheck-bootstrap/icheck-bootstrap.min.css' %}"><!-- icheck bootstrap -->
+    <link rel="stylesheet" href="{% static 'adminlte/dist/css/adminlte.min.css' %}"><!-- Theme style -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}"><!-- Theme style -->
+    <link rel="stylesheet" href="{% static 'adminlte/plugins/ion-rangeslider/css/ion.rangeSlider.min.css' %}">
+    <link rel="stylesheet" href="{% static 'adminlte/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css' %}">
+    <script src="https://unpkg.com/htmx.org@1.8.1" integrity="sha384-DXaTz/CiqGNRLEu025rPC9D2gEK8Imn+w1e1QtdYD0Bap7LIcHOYjUZAO96YDCX3" crossorigin="anonymous"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="{% static 'adminlte/plugins/jquery/jquery.min.js' %}"></script><!-- jQuery -->
+    <script src="{% static 'adminlte/plugins/jquery-knob/jquery.knob.min.js' %}"></script>
+    <script
+      type="text/javascript"
+      src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"
+    ></script>
+    <script src="{% static 'adminlte/plugins/sweetalert2/sweetalert2.min.js' %}"></script>
+</head>
+<body class="hold-transition layout-navbar-fixed layout-fixed sidebar-mini layout-footer-fixed text-sm" style="height: auto;" x-data="{ panel_page: '' }" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+    <div class="wrapper">
+        <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+            <ul class="navbar-nav">
+                <li class="nav-item"><a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a></li>
+            </ul>
+        </nav>
+
+        <aside class="main-sidebar sidebar-dark-primary elevation-4">
+            {% include 'django_adminlte_ui/panel/logo.html' %}
+            <div class="sidebar">
+                <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                    <div class="image"><img src="{{ avatar_url }}" class="img-circle elevation-2" alt="User Image"></div>
+                    <div class="info"><a href="#" class="d-block">{{ user.username }}</a></div>
+                </div>
+                {% include 'django_adminlte_ui/panel/menu.html' %}
+            </div>
+        </aside>
+        <div class="content-wrapper">
+            <div class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6" id="panel_header_left"></div>
+                        <div class="col-sm-6" id="panel_header_right"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="content">
+                <div id="page" class="container-fluid">
+                    <div hx-get="{{ request.get_full_path }}" hx-trigger="load"></div>
+                </div>
+            </div>
+        </div>
+        <aside class="control-sidebar control-sidebar-dark">
+        </aside>
+        <footer class="main-footer">
+            <strong>{{ project_title|title }}</strong> - All rights reserved.
+            {% if user.is_staff %}<div class="float-right d-none d-sm-inline-block"><b>Online 🟢</b></div>{% endif %}
+        </footer>
+    </div>
+    <script src="{% static 'adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script><!-- Bootstrap 4 -->
+    <script src="{% static 'adminlte/dist/js/adminlte.min.js' %}"></script><!-- AdminLTE App -->
+    <script src="{% static 'adminlte/plugins/ion-rangeslider/js/ion.rangeSlider.min.js' %}"></script>
+    {% django_htmx_script %}
+</body>
+</html>

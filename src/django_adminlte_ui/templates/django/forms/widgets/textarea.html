@@ -1,0 +1,6 @@
+<textarea
+        class="form-control"
+        :class="{ 'is-invalid': is_invalid }"
+        x-init="setTimeout(function() { if (is_invalid) $($el).addClass('is-invalid').fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100) }, 200)"
+        name="{{ widget.name }}"
+        {% include "django/forms/widgets/attrs.html" %}>{% if widget.value %}{{ widget.value }}{% endif %}</textarea>

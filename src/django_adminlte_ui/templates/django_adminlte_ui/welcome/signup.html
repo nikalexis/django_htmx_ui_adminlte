@@ -1,0 +1,64 @@
+<div class="register-box">
+    {% include 'django_adminlte_ui/welcome/logo.html' %}
+    <div class="card">
+        <div class="card-body register-card-body">
+            {% if success %}
+            <div class="row">
+                <div class="col-12 text-center">
+                    <span class="big-icon text-success"><i class="far fa-check-circle"></i></span>
+                    <p>Your account is ready! You can now <a href="{% url 'django_adminlte_ui:login' %}">login</a>.</p>
+                </div>
+            </div>
+            {% elif invalid %}
+            <div class="row">
+                <div class="col-12 text-center">
+                    <span class="big-icon text-danger"><i class="far fa-times-circle"></i></span>
+                    <p>This signup voucher is not valid.</p>
+                </div>
+            </div>
+            {% else %}
+            <p class="login-box-msg">Register a new membership</p>
+            <form name="signup">
+                <div class="input-group mb-3">
+                    <input name="email" type="email" class="form-control" placeholder="Email">
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-envelope"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="input-group mb-3">
+                    <input name="password1" type="password" class="form-control" placeholder="Password">
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-lock"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="input-group mb-3">
+                    <input name="password2" type="password" class="form-control" placeholder="Retype password">
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-lock"></span>
+                        </div>
+                    </div>
+                </div>
+                {% include 'django_adminlte_ui/helpers/callout.html' with type='danger' message=errors.forms.signup class="text-danger py-1" %}
+                <div class="row">
+                    <div class="col-8">
+                    </div>
+
+                    <div class="col-4">
+                        <button type="submit" class="btn btn-primary btn-block"
+                                hx-post="#"
+                                hx-target="#page"
+                                hx-trigger="click">Register</button>
+                    </div>
+
+                </div>
+            </form>
+            {% endif %}
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,5 @@
+<select x-init="setTimeout(function() { if (is_invalid) $($el).addClass('is-invalid').fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100) }, 200)" class="form-control" :class="{ 'is-invalid': is_invalid }" name="{{ widget.name }}"{% include "django/forms/widgets/attrs.html" %}>{% for group_name, group_choices, group_index in widget.optgroups %}{% if group_name %}
+  <optgroup label="{{ group_name }}">{% endif %}{% for option in group_choices %}
+  {% include option.template_name with widget=option %}{% endfor %}{% if group_name %}
+  </optgroup>{% endif %}{% endfor %}
+</select>

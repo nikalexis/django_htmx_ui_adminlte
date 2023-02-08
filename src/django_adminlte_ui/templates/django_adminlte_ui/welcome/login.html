@@ -1,0 +1,46 @@
+<div class="login-box">
+    {% include 'django_adminlte_ui/welcome/logo.html' %}
+    <div class="card">
+        <div class="card-body login-card-body">
+            <p class="login-box-msg">Sign in to start your session</p>
+            <form id="login">
+                <div class="input-group mb-3">
+                    <input name="user" type="email" class="form-control" placeholder="Email or username">
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-envelope"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="input-group mb-3">
+                    <input name="password" type="password" class="form-control" placeholder="Password">
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-lock"></span>
+                        </div>
+                    </div>
+                </div>
+                {% include 'django_adminlte_ui/helpers/callout.html' with type='danger' message=errors.forms.login class="text-danger py-1" %}
+                <div class="row">
+                    <div class="col-8">
+                        <div class="icheck-primary">
+                            <input type="checkbox" id="remember">
+                            <label for="remember">
+                                Remember Me
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="col-4">
+                        <button type="submit" class="btn btn-primary btn-block"
+                                hx-post="#"
+                                hx-target="#page"
+                                hx-trigger="click">Sign In</button>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,14 @@
+<div id="panel_header_right" hx-swap-oob="innerHTML">
+    <ol class="breadcrumb float-sm-right" id="panel_breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="/">Home</a>
+        </li>
+        {% for name, url in breadcrumb.items %}
+        <li class="breadcrumb-item {{ forloop.last|yesno:'active,' }}">
+            {% if not forloop.last and url %}<a href="{{ url }}" hx-get="{{ url }}" hx-target="#page" hx-push-url="true">{{ name }}</a>{% else %}{{ name }}{% endif %}
+        </li>
+        {% empty %}
+        <li class="breadcrumb-item active">{{ title }}</li>
+        {% endfor %}
+    </ol>
+</div>

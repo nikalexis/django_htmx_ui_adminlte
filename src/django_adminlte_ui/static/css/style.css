@@ -1,0 +1,14 @@
+.big-icon {
+    font-size: 100px;
+     color: #bbbbbb;
+}
+
+.text-no-overflow {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+tr.selected {
+    background-color: #ccf !important;
+}
