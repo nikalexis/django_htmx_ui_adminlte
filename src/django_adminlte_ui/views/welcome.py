@@ -1,69 +1,109 @@
+from django import forms
+from django.conf import settings
 from django.contrib.auth import logout, authenticate, login, get_user_model
-from django.shortcuts import redirect
-from django.urls import reverse
-from django_htmx.http import HttpResponseClientRedirect
 
+from django_htmx_ui.views.crud import FormMixin
 from django_htmx_ui.views.generic import PublicTemplateView, PrivateTemplateView
+from django_htmx_ui.views.mixins import OriginTemplateMixin
+
+User = get_user_model()
+
+PATH_ROOT = ''
 
 
-class WelcomePage(PublicTemplateView):
-    template_root = 'django_adminlte_ui/welcome/welcome.html'
+class WelcomeOrigin(OriginTemplateMixin, PublicTemplateView):
+    pass
 
 
-class ErrorNotFound(WelcomePage):
-    template_name = 'django_adminlte_ui/errors/404.html'
+class Root(PublicTemplateView):
 
+    @classmethod
+    @property
+    def path_route(cls):
+        return ''
 
-class ErrorServer(WelcomePage):
-    template_name = 'django_adminlte_ui/errors/500.html'
+    def on_get(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return self.redirect(
+                settings.LOGIN_REDIRECT_URL
+            )
+        else:
+            return self.redirect(
+                settings.LOGIN_URL,
+            )
 
 
 class Logout(PrivateTemplateView):
 
-    def get(self, request, *args, **kwargs):
+    def on_get(self, request, *args, **kwargs):
         logout(request)
-        return redirect(reverse('django_adminlte_ui:login'))
+        return self.redirect(
+            self.request.GET.get('next') or getattr(settings, 'LOGIN_URL', None) or '/'
+        )
 
 
-class Login(WelcomePage):
-    template_name = 'django_adminlte_ui/welcome/login.html'
+class Login(FormMixin, WelcomeOrigin):
+
+    class Form(forms.Form):
+        user = forms.CharField()
+        password = forms.CharField()
+
+    def authenticate(self, user, password):
+        user = authenticate(self.request, username=user, password=password) or \
+               authenticate(self.request, email=user, password=password)
+        return user
 
     def on_get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
-            return redirect(reverse('django_adminlte_ui:dashboard:dashboard'))
-
-    def on_post(self, request, *args, **kwargs):
-        user = request.POST['user']
-        password = request.POST['password']
-        user = authenticate(request, username=user, password=password) or \
-            authenticate(request, email=user, password=password)
-        if user is not None:
-            login(request, user)
-        if user and user.is_authenticated:
-            return HttpResponseClientRedirect(reverse('django_adminlte_ui:dashboard:dashboard'))
-        else:
-            self.errors = {'forms': {'login': 'Invalid credentials'}}
-
-
-class Signup(WelcomePage):
-    template_name = 'django_adminlte_ui/welcome/signup.html'
-
-    def on_post(self, request, *args, **kwargs):
-        email = request.POST['email']
-        password1 = request.POST['password1']
-        password2 = request.POST['password2']
-
-        User = get_user_model()
-        if User.objects.filter(email=email).exists():
-            self.errors = {'forms': {'signup': 'There is already an account with this email'}}
-        elif User.objects.filter(username=email).exists():
-            self.errors = {'forms': {'signup': 'There is already an account with this username'}}
-        elif password1 != password2:
-            self.errors = {'forms': {'signup': 'Passwords do not match each other'}}
-        else:
-            user = User.objects.create_user(
-                username=email,
-                email=email,
-                password=password1,
+            return self.redirect(
+                self.request.GET.get('next') or settings.LOGIN_REDIRECT_URL
             )
+
+    def on_post(self, request, *args, **kwargs):
+        if self.form.is_valid():
+            user = self.authenticate(self.form.cleaned_data.get('user'), self.form.cleaned_data.get('password'))
+            if user is not None:
+                login(request, user)
+            if user and user.is_authenticated:
+                return self.redirect(
+                    self.request.GET.get('next') or settings.LOGIN_REDIRECT_URL
+                )
+            else:
+                self.form.add_error(None, 'Invalid credentials.')
+
+
+class Signup(FormMixin, WelcomeOrigin):
+
+    class Form(forms.Form):
+        email = forms.EmailField()
+        password = forms.CharField()
+        confirm_password = forms.CharField()
+
+        def clean(self):
+            email = self.cleaned_data.get('email')
+            password = self.cleaned_data.get('password')
+            confirm_password = self.cleaned_data.get('confirm_password')
+
+            if password != confirm_password:
+                self.add_error('password', 'Passwords do not match.')
+                return
+
+            if User.objects.filter(username=email).count() > 0:
+                self.add_error('email', 'There is already an account with this email.')
+                return
+
+            return self.cleaned_data
+
+    def create_user(self):
+        user = User(
+            username=self.form.cleaned_data.get('email'),
+            email=self.form.cleaned_data.get('email'),
+            password=self.form.cleaned_data.get('password'),
+        )
+        user.save()
+        return user
+
+    def on_post(self, request, *args, **kwargs):
+        if self.form.is_valid():
+            self.create_user()
             self.add_context('success', True)

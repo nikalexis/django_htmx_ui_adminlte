@@ -1,9 +1,9 @@
-from django_adminlte_ui.views.panel import PanelPage
+from django_adminlte_ui.views.panel import PanelOrigin
 
 PATH_ROOT = ''
 TITLE = 'Dashboard'
 ICON = '📊'
 
 
-class Dashboard(PanelPage):
+class Dashboard(PanelOrigin):
     pass

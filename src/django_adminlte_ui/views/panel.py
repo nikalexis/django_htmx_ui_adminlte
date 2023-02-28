@@ -1,26 +1,37 @@
 from django_adminlte_ui.utils import avatar_url
 from django_htmx_ui.utils import ContextProperty
 from django_htmx_ui.views.generic import PrivateTemplateView
-from django_htmx_ui.views.mixins import PartialMixin
+from django_htmx_ui.views.mixins import PartialTemplateMixin, OriginTemplateMixin
 
 
-class CommonMixin:
+class PanelCommonMixin:
 
     def response_panel_page(self, url):
         self.response_location(
-            url,
+            str(url),
             target='#page',
             swap='innerHTML',
         )
+
+    @ContextProperty
+    def breadcrumb(self):
+        breadcrumb = {}
+        if hasattr(self, 'instance'):
+            if hasattr(self.module, 'List'):
+                breadcrumb[self.module.List().title] = self.url(self.module.List)
+            breadcrumb[self.instance] = self.url
+        else:
+            breadcrumb[self.title] = self.url
+        return breadcrumb
 
     @ContextProperty
     def avatar_url(self):
         return avatar_url(self.request.user)
 
 
-class PanelPage(CommonMixin, PrivateTemplateView):
-    template_root = 'django_adminlte_ui/panel/panel.html'
+class PanelOrigin(PanelCommonMixin, OriginTemplateMixin, PrivateTemplateView):
+    pass
 
 
-class PanelPartialPage(CommonMixin, PartialMixin, PrivateTemplateView):
+class PanelPartial(PanelCommonMixin, PartialTemplateMixin, PrivateTemplateView):
     pass

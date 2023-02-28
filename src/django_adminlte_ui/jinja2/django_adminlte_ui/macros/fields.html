@@ -1,0 +1,9 @@
+{% macro boolean(value, none_is_false=False) %}
+    {% if not none_is_false and value is none %}
+        <i class="fas fa-question-circle text-secondary"></i>
+    {% elif value %}
+        <i class="fas fa-check-circle text-success"></i>
+    {% else %}
+        <i class="fas fa-times-circle text-danger"></i>
+    {% endif %}
+{% endmacro %}

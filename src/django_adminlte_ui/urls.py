@@ -1,19 +1,20 @@
-from django.urls import path
+from django.conf import settings
 
-from django_adminlte_ui.views import dashboard
-from django_adminlte_ui.views.welcome import Login, Signup, Logout, ErrorNotFound, ErrorServer
+from django_adminlte_ui.views import dashboard, welcome, errors
+from django_adminlte_ui.views.errors import ErrorNotFound, ErrorServer
 from django_htmx_ui.utils import collect_paths
 
 
 app_name = 'django_adminlte_ui'
+
+urlpatterns_errors = [
+    collect_paths(errors, app_name),
+] if settings.DEBUG else []
+
 urlpatterns = [
-    path('', Login.as_view(), name='login'),
-    path('signup/', Signup.as_view(), name='signup'),
-    path('logout/', Logout.as_view(), name='logout'),
-    path('errors/404/', ErrorNotFound.as_view()),
-    path('errors/500/', ErrorServer.as_view()),
+    collect_paths(welcome, app_name),
     collect_paths(dashboard, app_name),
-]
+] + urlpatterns_errors
 
 handler400 = handler403 = handler404 = ErrorNotFound.as_view()
 handler500 = ErrorServer.as_view()

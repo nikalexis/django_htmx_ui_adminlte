@@ -7,5 +7,5 @@ TITLE = 'Users'
 ICON = '👤'
 
 
-class List(CrudListMixin, DefaultPanelPage):
+class List(CrudListMixin, DefaultPanelOrigin):
     pass

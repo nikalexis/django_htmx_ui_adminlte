@@ -1,5 +1,4 @@
-{% load static %}
-<a href="{% url 'django_adminlte_ui:dashboard:dashboard' %}" class="brand-link">
+<a href="{{ url('django_adminlte_ui:dashboard:dashboard') }}" class="brand-link">
     <img src="{% static 'adminlte/dist/img/AdminLTELogo.png' %}" alt="{{ project_title|title }} Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
     <span class="brand-text font-weight-light">{{ project_title|title }}</span>
 </a>

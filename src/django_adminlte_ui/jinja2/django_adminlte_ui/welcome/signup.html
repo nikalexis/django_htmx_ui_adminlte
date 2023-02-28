@@ -1,3 +1,4 @@
+{% from "django_adminlte_ui/macros/components.html" import callout %}
 <div class="register-box">
     {% include 'django_adminlte_ui/welcome/logo.html' %}
     <div class="card">
@@ -6,7 +7,7 @@
             <div class="row">
                 <div class="col-12 text-center">
                     <span class="big-icon text-success"><i class="far fa-check-circle"></i></span>
-                    <p>Your account is ready! You can now <a href="{% url 'django_adminlte_ui:login' %}">login</a>.</p>
+                    <p>Your account is ready! You can now <a href="{{ url('django_adminlte_ui:welcome:login') }}">login</a>.</p>
                 </div>
             </div>
             {% elif invalid %}
@@ -43,7 +44,7 @@
                         </div>
                     </div>
                 </div>
-                {% include 'django_adminlte_ui/helpers/callout.html' with type='danger' message=errors.forms.signup class="text-danger py-1" %}
+                {{ callout(type='danger', message=form.errors, class="text-danger py-1") }}
                 <div class="row">
                     <div class="col-8">
                     </div>

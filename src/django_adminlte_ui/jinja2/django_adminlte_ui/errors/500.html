@@ -1,17 +1,17 @@
 <div class="register-box">
     <div class="register-logo">
-        <a href="/"><b>Tank</b>project</a>
+        <a href="/">{{ project_title|title }}</a>
     </div>
     <div class="card">
         <div class="card-body register-card-body">
             <div class="row">
                 <div class="col-12 text-center">
-                    <span class="big-icon"><i class="fas fa-exclamation-triangle text-warning"></i></span>
-                    <h2 class="headline text-warning">404</h2>
+                    <span class="big-icon"><i class="fas fa-exclamation-triangle text-danger"></i></span>
+                    <h2 class="headline text-danger">500</h2>
                     <h5 class="headline">Oops! Something went wrong.</h5>
                     <p class="mt-5">
-                    We could not find the page you were looking for.
-                    Meanwhile, you may <a href="{% url 'django_adminlte_ui:login' %}">return to Home Page</a>
+                    We will work on fixing that right away.
+                    Meanwhile, you may <a href="/">return to Home Page</a>
                     </p>
                 </div>
             </div>
