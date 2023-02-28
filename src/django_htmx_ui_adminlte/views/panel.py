@@ -1,4 +1,4 @@
-from django_adminlte_ui.utils import avatar_url
+from django_htmx_ui_adminlte.utils import avatar_url
 from django_htmx_ui.utils import ContextProperty
 from django_htmx_ui.views.generic import PrivateTemplateView
 from django_htmx_ui.views.mixins import PartialTemplateMixin, OriginTemplateMixin

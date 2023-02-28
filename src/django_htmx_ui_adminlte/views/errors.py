@@ -1,4 +1,4 @@
-from django_adminlte_ui.views.welcome import WelcomeOrigin
+from django_htmx_ui_adminlte.views.welcome import WelcomeOrigin
 
 
 class ErrorNotFound(WelcomeOrigin):

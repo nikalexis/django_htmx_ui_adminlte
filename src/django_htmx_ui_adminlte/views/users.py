@@ -1,6 +1,6 @@
 from django.contrib.auth import get_user_model
 
-from django_adminlte_ui.views.crud import CrudList
+from django_htmx_ui_adminlte.views.crud import CrudList
 
 MODEL = get_user_model()
 TITLE = 'Users'

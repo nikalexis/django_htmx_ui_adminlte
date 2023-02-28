@@ -1,4 +1,4 @@
-from django_adminlte_ui.views.panel import PanelOrigin
+from django_htmx_ui_adminlte.views.panel import PanelOrigin
 
 PATH_ROOT = ''
 TITLE = 'Dashboard'

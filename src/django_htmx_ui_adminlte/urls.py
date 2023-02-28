@@ -1,7 +1,7 @@
 from django.conf import settings
 
-from django_adminlte_ui.views import dashboard, welcome, errors
-from django_adminlte_ui.views.errors import ErrorNotFound, ErrorServer
+from django_htmx_ui_adminlte.views import dashboard, welcome, errors
+from django_htmx_ui_adminlte.views.errors import ErrorNotFound, ErrorServer
 from django_htmx_ui.utils import collect_paths
 
 
