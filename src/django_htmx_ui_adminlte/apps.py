@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class DjangoAdminlteUiConfig(AppConfig):
+class DjangoHtmxUiAdminlteConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'django_adminlte_ui'
+    name = 'django_htmx_ui_adminlte'

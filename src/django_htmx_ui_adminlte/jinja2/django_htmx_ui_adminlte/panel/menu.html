@@ -1,0 +1,12 @@
+<nav class="user-panel mt-2">
+    <ul class="nav nav-pills nav-sidebar flex-column nav-compact nav-child-indent" data-widget="treeview" role="menu" data-accordion="false">
+
+        <li class="nav-header">EXAMPLES</li>
+        <li class="nav-item"><a href="{{ url('django_htmx_ui_adminlte:dashboard:dashboard') }}" class="nav-link" :class="{ 'active': panel_page=='django_htmx_ui_adminlte_views_dashboard' }" hx-get="{{ url('django_htmx_ui_adminlte:dashboard:dashboard') }}" hx-target="#page" hx-push-url="true"><span class="m-1">📊</span><p>Dashboard</p></a></li>
+
+        <li class="nav-header">ACTIONS</li>
+        {% if user.is_staff %}<li class="nav-item"><a href="{% url 'admin:index' %}" class="nav-link" target="_blank"><i class="nav-icon far fa-circle text-info"></i><p class="text">Admin panel</p></a></li>{% endif %}
+        <li class="nav-item"><a href="{{ url('django_htmx_ui_adminlte:logout') }}" class="nav-link"><i class="nav-icon far fa-circle text-danger"></i><p class="text">Log out</p></a></li>
+
+    </ul>
+</nav>

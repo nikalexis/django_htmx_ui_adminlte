@@ -5,7 +5,7 @@ from django_htmx_ui_adminlte.views.errors import ErrorNotFound, ErrorServer
 from django_htmx_ui.utils import collect_paths
 
 
-app_name = 'django_adminlte_ui'
+app_name = 'django_htmx_ui_adminlte'
 
 urlpatterns_errors = [
     collect_paths(errors, app_name),
