@@ -1,0 +1,14 @@
+{% macro callout(message='', header='', type='info', class='') %}
+    {% if header or message or caller %}
+        <div class="callout callout-{{ type }} {{ class }}">
+            {% if header %}
+                <h5>{{ header }}</h5>
+            {% endif %}
+            {% if caller is defined %}
+                {{ caller() }}
+            {% elif message %}
+                <p>{{ message }}</p>
+            {% endif %}
+        </div>
+    {% endif %}
+{% endmacro %}

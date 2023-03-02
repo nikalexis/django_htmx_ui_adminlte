@@ -1,0 +1,19 @@
+{% macro form_in_modal(icon, title, button_icon, button_text, form, url) %}
+    <form>
+        <div class="modal-header">
+            <h4 class="modal-title">{{ icon }}{{ title }}</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            {{ form }}
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-outline-danger float-right" data-dismiss="modal"><span
+                    aria-hidden="true">×</span> Close</button>
+            <button type="button" class="btn btn-success float-right" hx-post="{{ url }}"
+                hx-trigger="click"><i class="{{ button_icon }}"></i> {{ button_text }}</button>
+        </div>
+    </form>
+{% endmacro %}

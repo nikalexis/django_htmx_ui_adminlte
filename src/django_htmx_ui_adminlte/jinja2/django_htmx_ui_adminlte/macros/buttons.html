@@ -1,0 +1,11 @@
+{% macro button(type, text, icon='', modal='', class='', attrs='') %}
+    <button type="button" class="btn btn-{{ type }} {{ class }}"
+            {% if modal.id is defined %}data-toggle="modal" data-target="#{{ modal.id }}"{% endif %}
+            {{ attrs }}>
+        {% if icon %}<i class="{{ icon }}"></i>{% endif %} {{ text }}
+    </button>
+{% endmacro %}
+
+{% macro button_create(type='success', text='Create', icon='fas fa-plus', modal='', class='', attrs='') %}
+    {{- button(type=type, text=text, icon=icon, modal=modal, class=class, attrs=attrs) }}
+{% endmacro %}

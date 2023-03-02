@@ -1,0 +1,7 @@
+{% macro alert(icon, message, type='info', dismissible=True) %}
+    <div class="alert alert-{{ type }} {{ 'alert-dismissible' if dismissible }}">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <h5><i class="icon {{ icon }}"></i></h5>
+        {{ message }}
+    </div>
+{% endmacro %}

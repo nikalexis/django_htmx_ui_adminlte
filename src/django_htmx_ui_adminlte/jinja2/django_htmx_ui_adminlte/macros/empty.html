@@ -1,0 +1,24 @@
+{% macro empty(message='No items to display.') %}
+    <div class="text-center m-5">
+        <i class="fas fa-list text-xl text-warning"></i>
+        {% if message %}<p>{{ message }}</p>{% endif %}
+    </div>
+{% endmacro %}
+
+{% macro empty_action(action, icon='', message='No items to display.') %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 text-center">
+                <span class="big-icon">
+                    {% if icon %}
+                        {{ icon }}
+                    {% else %}
+                        <i class="fas fa-list text-warning"></i>️️
+                    {% endif %}
+                </span>
+                {% if message %}<p class="m-3">{{ message }}</p>{% endif %}
+                {{ action }}
+            </div>
+        </div>
+    </div>
+{% endmacro %}
