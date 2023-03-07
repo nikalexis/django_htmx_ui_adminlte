@@ -1,5 +1,5 @@
 {% macro modal(modal, trigger='intersect', empty_on_hide=True) %}
-    <div hx-swap-oob="beforeend:body">
+    <div hx-swap-oob="beforeend:body" @htmx:oobAfterSwap="console.log('lala');">
         <div class="modal fade" id="{{ modal.id }}">
             <div class="modal-dialog">
                 <div class="modal-content"
@@ -12,13 +12,9 @@
         </div>
     </div>
     <script>
-        // TODO: Find a better solution to workaround the backdrop shadow problem
-        setTimeout(
-            function(){
-                $('[id={{ modal.id }}]').not(":last").not(".show").remove()
-            },
-            100
-        );
+        htmx.on("htmx:oobAfterSwap", function(evt) {
+            $('[id={{ modal.id }}]').not(":last").not(".show").remove();
+        });
 
         {% if empty_on_hide %}
             modal = $('[id={{ modal.id }}]:last');
