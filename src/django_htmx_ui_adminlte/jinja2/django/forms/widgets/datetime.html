@@ -14,7 +14,7 @@
             :data-target="'#' + $id('datetimepicker')"
             data-toggle="datetimepicker"
             {% include "django/forms/widgets/attrs.html" %}
-            {% if widget.value != None %} value="{{ widget.value|stringformat:'s' }}"{% endif %}>
+            {% if widget.value != None %} value="{{ widget.value }}"{% endif %}>
     <div class="input-group-append" :data-target="'#' + $id('datetimepicker')" data-toggle="datetimepicker">
         <div class="input-group-text"><i class="fa fa-calendar"></i></div>
     </div>
