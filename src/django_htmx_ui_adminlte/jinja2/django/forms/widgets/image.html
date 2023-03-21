@@ -1,0 +1,60 @@
+<script>
+    function readURL(input, img) {
+      if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+          img.attr('src', e.target.result);
+        };
+
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+    var truncateString = (string = '', maxLength = 50) =>
+        string.length > maxLength
+        ? `${string.substring(0, maxLength)}…`
+        : string
+</script>
+<div class="input-group" x-data="{ 'label': '{{ 'Download image' if widget.value else 'Choose image' }}', 'is_initial': {{ 'true' if widget.is_initial else 'false' }},  'clear': '', 'file': null }">
+    <div class="info-box bg-light w-100 p-3" style="min-height: auto;">
+        <input type="hidden" name="{{ widget.checkbox_name }}" id="{{ widget.checkbox_id }}" x-model="clear">
+        <input x-init="setTimeout(function() { if (is_invalid) $($el).addClass('is-invalid').fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100) }, 200)"
+               class="form-control position-absolute" :class="{ 'is-invalid': is_invalid }"
+               type="{{ widget.type }}"
+               name="{{ widget.name }}"
+               @change="if ($event.target.files && $event.target.files[0]) {file = $event.target.files[0]; console.log(file); label = 'file selected [' + truncateString(file.name, 20) + ']'; clear = ''; is_initial = false; $nextTick(() => {readURL($el, $($el).parent().find('img.image-file'))});} else { file=null; clear='1'; label = 'Choose image'; }"
+               style="visibility: hidden;"
+               {% include "django/forms/widgets/attrs.html" %}
+        >
+        <label role="button" class="w-100 m-0" @click="$($el).siblings('input')[1].click();" :for="$($el).siblings('input').first().attr('id')" :class="{'text-secondary': !file, 'text-success': file}">
+            <template x-if="is_initial">
+                <div>
+                    <div class="text-center mb-2">
+                        <img src="{{ widget.value.url if widget.is_initial }}" style="max-height: 150px; max-width: 100%;">
+                        <span @click.prevent.stop="clear='1'; label='Choose image'; is_initial = false; file=null;" class="position-absolute bg-white rounded-circle shadow-sm" style="line-height: 1; margin-left: -15px; margin-top: -3px;"><i class="far fa-times-circle text-danger text-lg"></i></span>
+                    </div>
+                    <div class="text-center">
+                        <a href="{{ widget.value.url if widget.is_initial }}" target="_blank" @click.stop>
+                            <i class="fas fa-cloud-download-alt mr-1"></i>
+                            <span class="mr-1">({{ humanize.naturalsize(widget.value.size) if widget.is_initial }})</span>
+                            <span x-text="label"></span>
+                        </a>
+                    </div>
+                </div>
+            </template>
+            <template x-if="!is_initial">
+                <div>
+                    <div class="text-center mb-2">
+                        <i class="far fa-image display-4" x-show="!file"></i>
+                        <img class="image-file" style="max-height: 150px; max-width: 100%;" x-show="file">
+                        <span x-show="file" @click.prevent.stop="clear='1'; label='Choose image'; is_initial = false; file=null;" class="position-absolute bg-white rounded-circle shadow-sm" style="line-height: 1; margin-left: -15px; margin-top: -3px;"><i class="far fa-times-circle text-danger text-lg"></i></span>
+                    </div>
+                    <div class="text-center">
+                        <i class="fas fa-cloud-upload-alt mr-1"></i>
+                        <span class="text-nowrap" x-text="label"></span>
+                    </div>
+                </div>
+            </template>
+        </label>
+    </div>
+</div>
