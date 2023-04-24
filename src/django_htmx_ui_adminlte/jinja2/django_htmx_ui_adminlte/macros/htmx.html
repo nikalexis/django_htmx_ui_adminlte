@@ -1,0 +1,13 @@
+{% macro hx_attrs() -%}
+    {% for key, value in kwargs.items() %}
+    hx-{{ key }}="{{ value }}"
+    {% endfor %}
+{%- endmacro %}
+
+
+{% macro lazyload(url, trigger='load delay:0.01s', target='this', swap='outerHTML', method='get', tag='div') -%}
+    {%- if tag %}<{{ tag }}{% endif %}
+        {% set attrs = dict(kwargs, **{method: url}) %}
+        {{ hx_attrs(trigger=trigger, target=target, swap=swap, **attrs) }}
+    {%- if tag %}></{{ tag }}>{% endif -%}
+{%- endmacro %}
