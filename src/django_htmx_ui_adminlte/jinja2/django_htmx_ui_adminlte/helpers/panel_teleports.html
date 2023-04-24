@@ -11,7 +11,7 @@
         </li>
         {% for name, url in breadcrumb.items() %}
         <li class="breadcrumb-item {{ 'active' if loop.last }}">
-            {% if not loop.last and url %}<a href="{{ url }}" hx-get="{{ url }}" hx-target="#page" hx-push-url="true">{{ name }}</a>{% else %}{{ name }}{% endif %}
+            {% if not loop.last and url %}<a href="{{ url }}" hx-get="{{ url }}" hx-target="#page">{{ name }}</a>{% else %}{{ name }}{% endif %}
         </li>
         {% else %}
         <li class="breadcrumb-item active">{{ title }}</li>
