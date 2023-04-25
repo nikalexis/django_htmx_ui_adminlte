@@ -5,7 +5,7 @@
 {%- endmacro %}
 
 
-{% macro lazyload(url, trigger='htmx:afterSettle from:body once delay:0.01s', target='this', swap='outerHTML', method='get', tag='div') -%}
+{% macro lazyload(url, trigger='load once delay:0.02s, htmx:afterSettle from:body once delay:0.01s', target='this', swap='outerHTML', method='get', tag='div') -%}
     {%- if tag %}<{{ tag }}{% endif %}
         {% set attrs = dict(kwargs, **{method: url}) %}
         {{ hx_attrs(trigger=trigger, target=target, swap=swap, **attrs) }}
