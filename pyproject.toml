@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "django_htmx_ui_adminlte"
-version = "0.1.11"
+version = "0.1.12"
 authors = [
   { name="Nikalexis Nikolaos", email="nikalexis@gmail.com" },
 ]
@@ -18,7 +18,7 @@ classifiers = [
 ]
 dependencies = [
     'Django >= 4.1.0',
-    'django_htmx_ui >= 0.1.6',
+    'django_htmx_ui >= 0.1.8',
 ]
 
 [project.urls]
