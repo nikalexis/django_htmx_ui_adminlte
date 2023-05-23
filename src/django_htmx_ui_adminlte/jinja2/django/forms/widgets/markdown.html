@@ -29,7 +29,7 @@
         let editor = new toastui.Editor({...defaultOptions, ...widgetOptions});
         
         {% if widget.value %}
-        editor.setMarkdown({{ widget.value|tojson }});
+        editor.setMarkdown({{ widget.value|tojson }}, false);
         {% endif %}
     }
     
