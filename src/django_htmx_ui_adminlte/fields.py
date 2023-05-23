@@ -3,7 +3,7 @@ from django.conf import settings
 from django.db import models
 from django.utils.module_loading import import_string
 
-from .widgets import ImageInput
+from .widgets import ImageInput, MarkdownWidget
 
 
 def default_upload_to(instance, filename):
@@ -30,5 +30,17 @@ class DefaultImageField(models.ImageField):
             widget = ImageInput
 
         defaults = {'form_class': ImageField}
+        defaults.update(kwargs)
+        return super().formfield(**defaults)
+
+
+class MarkdownField(models.TextField):
+
+    def __init__(self, toastui=None, **kwargs):
+        self.toastui = toastui or {}
+        super().__init__(**kwargs)
+
+    def formfield(self, **kwargs):
+        defaults = {'widget': MarkdownWidget}
         defaults.update(kwargs)
         return super().formfield(**defaults)

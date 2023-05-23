@@ -1,0 +1,38 @@
+<script>
+    function create_editor() {
+        let divElement = document.createElement('div');
+
+        let inputElement = document.createElement('input');
+        inputElement.type = 'hidden'
+        inputElement.name = "{{ widget.name }}"
+
+        let scriptElement = document.currentScript;
+        scriptElement.parentNode.appendChild(inputElement);
+        scriptElement.parentNode.appendChild(divElement);
+
+        function on_change(a) {
+            inputElement.value = editor.getMarkdown();
+        }
+
+        let defaultOptions = {
+            el: divElement,
+            height: '500px',
+            initialEditType: 'wysiwyg',
+            previewStyle: 'vertical',
+            autofocus: false,
+            events: {
+                'change': on_change
+            }
+        };
+        let widgetOptions = {{ widget.attrs|tojson }};
+
+        let editor = new toastui.Editor({...defaultOptions, ...widgetOptions});
+        
+        {% if widget.value %}
+        editor.setMarkdown({{ widget.value|tojson }});
+        {% endif %}
+    }
+    
+    create_editor();
+    
+</script>

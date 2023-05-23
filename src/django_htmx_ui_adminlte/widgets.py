@@ -1,4 +1,5 @@
-from django.forms.widgets import Input, ClearableFileInput
+# from django.forms import Widget
+from django.forms.widgets import TextInput, Input, ClearableFileInput
 
 
 class SliderInput(Input):
@@ -7,3 +8,8 @@ class SliderInput(Input):
 
 class ImageInput(ClearableFileInput):
     template_name = 'django/forms/widgets/image.html'
+
+
+class MarkdownWidget(TextInput):
+    template_name = 'django/forms/widgets/markdown.html'
+
