@@ -15,14 +15,15 @@
         ? `${string.substring(0, maxLength)}…`
         : string
 </script>
-<div class="input-group" x-data="{ 'label': '{{ 'Download image' if widget.value else 'Choose image' }}', 'is_initial': {{ 'true' if widget.is_initial else 'false' }},  'clear': '', 'file': null }">
+<div class="input-group" x-data="{ 'label': '{{ 'Download image' if widget.value else 'Choose image' }}', 'is_initial': {{ 'true' if widget.is_initial else 'false' }},  'clear': '', 'file': null, file_input: '' }">
     <div class="info-box bg-light w-100 p-3" style="min-height: auto;">
         <input type="hidden" name="{{ widget.checkbox_name }}" id="{{ widget.checkbox_id }}" x-model="clear">
         <input x-init="setTimeout(function() { if (is_invalid) $($el).addClass('is-invalid').fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100) }, 200)"
                class="form-control position-absolute" :class="{ 'is-invalid': is_invalid }"
                type="{{ widget.type }}"
                name="{{ widget.name }}"
-               @change="if ($event.target.files && $event.target.files[0]) {file = $event.target.files[0]; console.log(file); label = 'file selected [' + truncateString(file.name, 20) + ']'; clear = ''; is_initial = false; $nextTick(() => {readURL($el, $($el).parent().find('img.image-file'))});} else { file=null; clear='1'; label = 'Choose image'; }"
+               @change="if ($event.target.files && $event.target.files[0]) {file = $event.target.files[0]; console.log(file); label = 'file selected [' + truncateString(file.name, 20) + ']'; clear = ''; is_initial = false; $nextTick(() => {readURL($el, $($el).parent().find('img.image-file'))});} else { $($el).parent().find('img.image-file').attr('src', ''); file=null; clear='1'; label = 'Choose image'; }"
+               x-model="file_input"
                style="visibility: hidden;"
                {% include "django/forms/widgets/attrs.html" %}
         >
@@ -31,7 +32,7 @@
                 <div>
                     <div class="text-center mb-2">
                         <img src="{{ widget.value.url if widget.is_initial }}" style="max-height: 150px; max-width: 100%;">
-                        <span @click.prevent.stop="clear='1'; label='Choose image'; is_initial = false; file=null;" class="position-absolute bg-white rounded-circle shadow-sm" style="line-height: 1; margin-left: -15px; margin-top: -3px;"><i class="far fa-times-circle text-danger text-lg"></i></span>
+                        <span @click.prevent.stop="clear='1'; label='Choose image'; is_initial = false; file=null; file_input='';" class="position-absolute bg-white rounded-circle shadow-sm" style="line-height: 1; margin-left: -15px; margin-top: -3px;"><i class="far fa-times-circle text-danger text-lg"></i></span>
                     </div>
                     <div class="text-center">
                         <a href="{{ widget.value.url if widget.is_initial }}" target="_blank" @click.stop>
@@ -47,7 +48,7 @@
                     <div class="text-center mb-2">
                         <i class="far fa-image display-4" x-show="!file"></i>
                         <img class="image-file" style="max-height: 150px; max-width: 100%;" x-show="file">
-                        <span x-show="file" @click.prevent.stop="clear='1'; label='Choose image'; is_initial = false; file=null;" class="position-absolute bg-white rounded-circle shadow-sm" style="line-height: 1; margin-left: -15px; margin-top: -3px;"><i class="far fa-times-circle text-danger text-lg"></i></span>
+                        <span x-show="file" @click.prevent.stop="clear='1'; label='Choose image'; is_initial = false; file=null; file_input=''; $($el).parent().find('img.image-file').attr('src', '');" class="position-absolute bg-white rounded-circle shadow-sm" style="line-height: 1; margin-left: -15px; margin-top: -3px;"><i class="far fa-times-circle text-danger text-lg"></i></span>
                     </div>
                     <div class="text-center">
                         <i class="fas fa-cloud-upload-alt mr-1"></i>
