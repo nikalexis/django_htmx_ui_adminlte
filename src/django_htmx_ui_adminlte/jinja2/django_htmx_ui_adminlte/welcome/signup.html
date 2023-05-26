@@ -21,31 +21,45 @@
             {% else %}
             <p class="login-box-msg">Register a new membership</p>
             <form name="signup">
-                <div class="input-group mb-3">
-                    <input name="email" type="email" class="form-control" placeholder="Email">
-                    <div class="input-group-append">
-                        <div class="input-group-text">
-                            <span class="fas fa-envelope"></span>
+                <div class="form-group" x-data="{ is_invalid: {{ 'true' if form.email.errors else 'false' }} }">
+                    <div class="input-group mb-3" :class="{ 'is-invalid': is_invalid }">
+                        {{ form.email }}
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-envelope"></span>
+                            </div>
                         </div>
                     </div>
+                    {{ form.email.errors }}
                 </div>
-                <div class="input-group mb-3">
-                    <input name="password1" type="password" class="form-control" placeholder="Password">
-                    <div class="input-group-append">
-                        <div class="input-group-text">
-                            <span class="fas fa-lock"></span>
+                <div class="form-group" x-data="{ is_invalid: {{ 'true' if form.password1.errors else 'false' }} }">
+                    <div class="input-group mb-3" :class="{ 'is-invalid': is_invalid }">
+                        {{ form.password1 }}
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-lock"></span>
+                            </div>
                         </div>
                     </div>
+                    {{ form.password1.errors }}
                 </div>
-                <div class="input-group mb-3">
-                    <input name="password2" type="password" class="form-control" placeholder="Retype password">
-                    <div class="input-group-append">
-                        <div class="input-group-text">
-                            <span class="fas fa-lock"></span>
+                <div class="form-group" x-data="{ is_invalid: {{ 'true' if form.password2.errors else 'false' }} }">
+                    <div class="input-group mb-3" :class="{ 'is-invalid': is_invalid }">
+                        {{ form.password2 }}
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-lock"></span>
+                            </div>
                         </div>
                     </div>
+                    {{ form.password2.errors }}
                 </div>
-                {{ callout(type='danger', message=form.errors, class="text-danger py-1") }}
+                {% if form.non_field_errors() %}
+                {% call callout(type='danger', class="is-invalid text-danger py-1") %}
+                    <span class="is-invalid"></span>
+                    {{ form.non_field_errors() }}
+                {% endcall %}
+                {% endif %}
                 <div class="row">
                     <div class="col-8">
                     </div>

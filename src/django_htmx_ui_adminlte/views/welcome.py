@@ -76,16 +76,16 @@ class Signup(FormMixin, WelcomeOrigin):
 
     class Form(forms.Form):
         email = forms.EmailField()
-        password = forms.CharField()
-        confirm_password = forms.CharField()
+        password1 = forms.CharField(widget=forms.PasswordInput())
+        password2 = forms.CharField(widget=forms.PasswordInput())
 
         def clean(self):
             email = self.cleaned_data.get('email')
-            password = self.cleaned_data.get('password')
-            confirm_password = self.cleaned_data.get('confirm_password')
+            password1 = self.cleaned_data.get('password1')
+            password2 = self.cleaned_data.get('password2')
 
-            if password != confirm_password:
-                self.add_error('password', 'Passwords do not match.')
+            if password1 != password2:
+                self.add_error(None, 'Passwords do not match.')
                 return
 
             if User.objects.filter(username=email).count() > 0:
@@ -98,7 +98,7 @@ class Signup(FormMixin, WelcomeOrigin):
         user = User(
             username=self.form.cleaned_data.get('email'),
             email=self.form.cleaned_data.get('email'),
-            password=self.form.cleaned_data.get('password'),
+            password=self.form.cleaned_data.get('password1'),
         )
         user.save()
         return user
