@@ -42,7 +42,7 @@
     </div>
     <div class="card-body">
         {% for link in tabs.links %}
-        <div class="tab-content" x-show="active == '{{ link.index }}'" hx-get="{{ link.url }}" hx-swap="innnerHTML" hx-trigger="load">
+        <div class="tab-content" x-show="active == '{{ link.index }}'" hx-target="this" hx-get="{{ link.url }}" hx-swap="innnerHTML" hx-trigger="load">
         </div>
         {% endfor %}
     </div>
