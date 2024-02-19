@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "django_htmx_ui_adminlte"
-version = "0.1.14"
+version = "0.1.15"
 authors = [
   { name="Nikalexis Nikolaos", email="nikalexis@gmail.com" },
 ]
