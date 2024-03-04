@@ -2,7 +2,14 @@
     document.title= "{{ title }}";
 </script>
 <div id="panel_header_left" hx-swap-oob="innerHTML">
-    <h1 class="m-0 pl-3">️{{ icon }} {{ title }}</h1>
+    <h1 class="m-0 pl-3">️
+        {% if icon|length <= 1 %}
+            {{ icon }}
+        {% elif icon %}
+            <i class="nav-icon mx-2 fa-fw {{ icon }}"></i>
+        {% endif %}
+        {{ title }}
+    </h1>
 </div>
 <div id="panel_header_right" hx-swap-oob="innerHTML">
     <ol class="breadcrumb float-sm-right" id="panel_breadcrumb">

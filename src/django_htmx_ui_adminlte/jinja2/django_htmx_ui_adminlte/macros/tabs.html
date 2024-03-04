@@ -12,8 +12,13 @@
                             hx-trigger="click"
                         {% else %}
                             style="cursor: default;"
+                        {% endif %}>
+                        {% if link.icon and link.icon|length <= 1 %}
+                            {{ icon }}
+                        {% elif link.icon %}
+                            <i class="mx-1 fa-fw {{ link.icon }}"></i>
                         {% endif %}
-                        >{{ link.title }}</a>
+                        {{ link.title }}</a>
                 </li>
                 {% endfor %}
             </ul>
@@ -34,8 +39,13 @@
                 <a class="nav-link" :class="{'active': active=='{{ link.index }}'}"
                     :role="active!='{{ link.index }}' ? 'button': ''"
                     :style="active=='{{ link.index }}' ? 'cursor: default;' : ''"
-                    @click="active='{{ link.index }}'"
-                    >{{ link.title }}</a>
+                    @click="active='{{ link.index }}'">
+                    {% if link.icon and link.icon|length <= 1 %}
+                        {{ icon }}
+                    {% elif link.icon %}
+                        <i class="mx-1 fa-fw {{ icon }}"></i>
+                    {% endif %}
+                    {{ link.title }}</a>
             </li>
             {% endfor %}
         </ul>
