@@ -10,8 +10,10 @@
         <div class="row">
             <div class="col-12 text-center">
                 <span class="big-icon">
-                    {% if icon %}
+                    {% if icon|length <= 1 %}
                         {{ icon }}
+                    {% elif icon %}
+                        <i class="{{ icon }}"></i>
                     {% else %}
                         <i class="fas fa-list text-warning"></i>️️
                     {% endif %}
