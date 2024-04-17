@@ -94,14 +94,12 @@ class Signup(FormMixin, WelcomeOrigin):
 
             return self.cleaned_data
 
-    def create_user(self):
-        user = User(
+    def create_user(self, model=User):
+        return model.objects.create_user(
             username=self.form.cleaned_data.get('email'),
             email=self.form.cleaned_data.get('email'),
             password=self.form.cleaned_data.get('password1'),
         )
-        user.save()
-        return user
 
     def on_post(self, request, *args, **kwargs):
         if self.form.is_valid():
